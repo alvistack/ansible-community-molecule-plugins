@@ -1,0 +1,5 @@
+python-molecule-plugins source: file-without-copyright-information
+python-molecule-plugins source: no-debian-changes
+python-molecule-plugins source: source-contains-prebuilt-windows-binary
+python-molecule-plugins source: source-is-missing
+python-molecule-plugins source: source-package-encodes-python-version
