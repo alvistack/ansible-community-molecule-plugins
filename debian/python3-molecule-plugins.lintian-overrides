@@ -1,0 +1,4 @@
+python3-molecule-plugins: copyright-without-copyright-notice
+python3-molecule-plugins: initial-upload-closes-no-bugs
+python3-molecule-plugins: no-manual-page
+python3-molecule-plugins: zero-byte-file-in-doc-directory
