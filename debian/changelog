@@ -1,0 +1,5 @@
+python-molecule-plugins (100:23.7.0-1) UNRELEASED; urgency=medium
+
+  * https://github.com/ansible-community/molecule-plugins/releases/tag/v23.7.0
+
+ -- Wong Hoi Sing Edison <hswong3i@pantarei-design.com>  Thu, 23 Jan 2025 20:39:02 +0800
