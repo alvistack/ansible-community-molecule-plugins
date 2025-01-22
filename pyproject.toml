@@ -1,15 +1,14 @@
 [build-system]
 requires = [
   "setuptools >= 64.0.0", # required by pyproject+setuptools_scm integration
-  "setuptools_scm[toml] >= 7.0.5", # required for "no-local-version" scheme
 
 ]
 build-backend = "setuptools.build_meta"
 
 [project]
 # https://peps.python.org/pep-0621/#readme
-requires-python = ">=3.9"
-dynamic = ["version"]
+requires-python = ">=3.10"
+version = "23.6.0"
 name = "molecule-plugins"
 description = "Molecule Plugins"
 readme = "README.md"
@@ -26,7 +25,6 @@ classifiers = [
   "Operating System :: MacOS",
   "Operating System :: POSIX",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -40,7 +38,7 @@ classifiers = [
 keywords = ["ansible", "testing", "molecule", "plugin"]
 dependencies = [
     # molecule plugins are not allowed to mention Ansible as a direct dependency
-    "molecule >= 6.0.0a1",
+    "molecule >= 25.1.0",
 ]
 
 [project.urls]
@@ -52,7 +50,7 @@ changelog = "https://github.com/ansible-community/molecule-plugins/releases"
 [project.optional-dependencies]
 test = [
     "pytest-helpers-namespace >= 2019.1.8",
-    "molecule[test] >= 6.0.0a1"
+    "molecule[test] >= 25.1.0"
 ]
 azure = []
 docker = [
@@ -89,7 +87,7 @@ openstack = [
 ]
 
 [tool.ruff]
-ignore = [
+lint.ignore = [
   "E501", # we use black
   # we deliberately ignore these:
   "EM102",
@@ -101,6 +99,7 @@ ignore = [
   "B028",
   "BLE",
   "C901",
+  "COM812",
   "D",
   "DTZ",
   "FBT",
@@ -119,15 +118,15 @@ ignore = [
   "FIX002",
   "TRY",
 ]
-select = ["ALL"]
+lint.select = ["ALL"]
 target-version = "py39"
 # Same as Black.
 line-length = 88
 
-[tool.ruff.flake8-pytest-style]
+[tool.ruff.lint.flake8-pytest-style]
 parametrize-values-type = "tuple"
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["molecule_plugins"]
 
 [project.entry-points."molecule.driver"]
@@ -139,7 +138,3 @@ gce = "molecule_plugins.gce.driver:GCE"
 podman = "molecule_plugins.podman.driver:Podman"
 vagrant = "molecule_plugins.vagrant.driver:Vagrant"
 openstack = "molecule_plugins.openstack.driver:Openstack"
-
-[tool.setuptools_scm]
-local_scheme = "no-local-version"
-write_to = "src/molecule_plugins/_version.py"

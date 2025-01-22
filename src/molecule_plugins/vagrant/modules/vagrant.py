@@ -364,6 +364,7 @@ def merge_dicts(a: MutableMapping, b: MutableMapping) -> MutableMapping:
 class VagrantClient:
     def __init__(self, module) -> None:
         self._module = module
+        self.provider = self._module.params["provider_name"]
         self.provision = self._module.params["provision"]
         self.cachier = self._module.params["cachier"]
 
@@ -451,9 +452,10 @@ class VagrantClient:
         changed = False
         if self._running() != len(self.instances):
             changed = True
+            provider = self.provider
             provision = self.provision
             with contextlib.suppress(Exception):
-                self._vagrant.up(provision=provision)
+                self._vagrant.up(provider=provider, provision=provision)
 
         # NOTE(retr0h): Ansible wants only one module return `fail_json`
         # or `exit_json`.
@@ -498,10 +500,7 @@ class VagrantClient:
         try:
             return self._vagrant.conf(vm_name=instance_name)
         except Exception:
-            msg = "Failed to get vagrant config for {}: See log file '{}'".format(
-                instance_name,
-                self._get_stderr_log(),
-            )
+            msg = f"Failed to get vagrant config for {instance_name}: See log file '{self._get_stderr_log()}'"
             with open(self._get_stderr_log(), encoding="utf-8") as f:
                 self.result["stderr"] = f.read()
                 self._module.fail_json(msg=msg, **self.result)
@@ -512,10 +511,7 @@ class VagrantClient:
 
             return {"name": s.name, "state": s.state, "provider": s.provider}
         except Exception:
-            msg = "Failed to get status for {}: See log file '{}'".format(
-                instance_name,
-                self._get_stderr_log(),
-            )
+            msg = f"Failed to get status for {instance_name}: See log file '{self._get_stderr_log()}'"
             with open(self._get_stderr_log(), encoding="utf-8") as f:
                 self.result["stderr"] = f.read()
                 self._module.fail_json(msg=msg, **self.result)
@@ -687,7 +683,7 @@ class VagrantClient:
     def _get_stderr_log(self):
         return self._get_vagrant_log("err")
 
-    def _get_vagrant_log(self, __type):
+    def _get_vagrant_log(self, __type, /):
         return os.path.join(self._config["workdir"], f"vagrant.{__type}")
 
 
@@ -709,7 +705,7 @@ def main():
             "provider_options": {"type": "dict", "default": {}},
             "provider_override_args": {"type": "list", "default": None},
             "provider_raw_config_args": {"type": "list", "default": None},
-            "provider_name": {"type": "str", "default": "virtualbox"},
+            "provider_name": {"type": "str", "required": False, "default": "virtualbox"},
             "default_box": {"type": "str", "default": None},
             "provision": {"type": "bool", "default": False},
             "force_stop": {"type": "bool", "default": False},
