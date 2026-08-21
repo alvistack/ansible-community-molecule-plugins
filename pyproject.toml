@@ -3,7 +3,6 @@
 [build-system]
 requires = [
   "setuptools >= 77.0.0", # required by pyproject+setuptools_scm integration
-  "setuptools_scm[toml] >= 7.0.5" # required for "no-local-version" scheme
 ]
 build-backend = "setuptools.build_meta"
 
@@ -35,13 +34,13 @@ pkg = [
 [project]
 # https://peps.python.org/pep-0621/#readme
 requires-python = ">=3.10"
-dynamic = ["version"]
+version = "26.7.15"
 name = "molecule-plugins"
 description = "Molecule Plugins"
 readme = "README.md"
 authors = [{"name" = "Sorin Sbarnea", "email" = "sorin.sbarnea@gmail.com"}]
 maintainers = [{"name" = "Sorin Sbarnea", "email" = "sorin.sbarnea@gmail.com"}]
-license = "MIT"
+license = {text = "MIT"}
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Console",
@@ -164,10 +163,6 @@ lint.ignore = [
   "TRY"
 ]
 lint.select = ["ALL"]
-
-[tool.setuptools_scm]
-local_scheme = "no-local-version"
-write_to = "src/molecule_plugins/_version.py"
 
 [tool.tox]
 env_list = [
