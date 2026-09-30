@@ -2,10 +2,11 @@
 
 [project]
 name = "molecule-plugins"
+version = "26.9.28"
 description = "Molecule Plugins"
 readme = "README.md"
 requires-python = ">=3.10"
-license = "MIT"
+license = {text = "MIT"}
 authors = [{ "name" = "Sorin Sbarnea", "email" = "sorin.sbarnea@gmail.com" }]
 maintainers = [{ "name" = "Sorin Sbarnea", "email" = "sorin.sbarnea@gmail.com" }]
 keywords = ["ansible", "molecule", "plugin", "testing"]
@@ -35,7 +36,6 @@ dependencies = [
   # molecule plugins are not allowed to mention Ansible as a direct dependency
   "molecule>=25.1.0"
 ]
-dynamic = ["version"]
 
 [project.urls]
 changelog = "https://github.com/ansible-community/molecule-plugins/releases"
@@ -88,7 +88,6 @@ pkg = ["build>=0.9", "pip>=25.2", "pipx>=1.7.1", "twine>=4.0.1"]
 
 [build-system]
 requires = [
-  "setuptools_scm[toml] >= 7.0.5",  # required for "no-local-version" scheme
   "setuptools >= 77.0.0",  # required by pyproject+setuptools_scm integration
 ]
 build-backend = "setuptools.build_meta"
@@ -432,10 +431,6 @@ required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
-
-[tool.setuptools_scm]
-local_scheme = "no-local-version"
-write_to = "src/molecule_plugins/_version.py"
 
 [tool.tomlsort]
 in_place = true
